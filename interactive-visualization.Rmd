@@ -1,14 +1,13 @@
 ---
 title: "Interactive Visualizations"
-author: "Charles Lang"
-date: "1/29/2018"
+author: "Gian Zlupko"
+date: "2/16/21"
 output: html_document
 ---
 
 Step-by-step instructions for building a Shiny App
 
 ```{r}
-install.packages("shiny")
 library(shiny)
 ```
 
