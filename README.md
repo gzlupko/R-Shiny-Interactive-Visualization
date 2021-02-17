@@ -40,5 +40,5 @@ Once you have completed all tasks in the unit, please complete the [knowledge ch
 
 * [Shiny Gallery](https://shiny.rstudio.com/gallery/)
 * [D’Agostino McGowan, L. (2018). Building Dashboards with shinydashboard](https://www.datacamp.com/courses/building-dashboards-with-shinydashboard)
-* [Interactive ggplot Bar Chart using Reactive and Render] https://www.youtube.com/watch?v=rlcUiSw49FY
+* [Interactive ggplot Bar Chart using Reactive and Render] (https://www.youtube.com/watch?v=rlcUiSw49FY)
 
