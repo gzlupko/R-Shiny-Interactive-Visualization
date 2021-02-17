@@ -75,9 +75,9 @@ server <- function(input, output) {
 }
 ```
 
-5. The command for generating a random number drawn from a normal distribution is "rnorm()". Try rnorm in teh command line using any number you like between the parentheses. It will draw numbers from a normal distribution with mean of zero and standard deviation of 1. Now, put the hist() command around your rnorm command: 
+5. The command for generating a random number drawn from a normal distribution is "rnorm()". Try rnorm in the command line using any number you like between the parentheses. It will draw numbers from a normal distribution with mean of zero and standard deviation of 1. Now, put the hist() command around your rnorm command: 
 
-hist(rnorm())
+hist(rnorm(10,209))
 
 Now you have generated a random histogram! We want our Shiny App to do this, but with a range of values that the user can choose from.
 
@@ -112,7 +112,49 @@ shinyApp(ui = ui, server = server)
 
 Go to the [Shiny Apps hosting service](http://www.shinyapps.io/) and set up an account. Transfer your visualization to the RStudio servers according to the instructions [here](http://docs.rstudio.com/shinyapps.io/).
 
+
+
 Now see if you can replace the standard histogram in the above Shiny App with a ggplot histogram hosted on shinyapps.io.
+
+
+
+```{r}
+
+
+ui <- fluidPage(
+  sliderInput(inputId = "num", label = "Choose a number", 
+    value = 1, min = 1, max = 100), plotOutput("hist"))
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    hist(rnorm(input$num))
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+
+
+
+library(ggplot2)
+
+ui <- fluidPage(
+  sliderInput(inputId = "num", label = "Choose a number", 
+    value = 1, min = 1, max = 100), plotOutput("hist"))
+?fluidPage
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    ggplot(data = rnorm(input$num), aes()) + geom_boxplot() 
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+
+
+```
+
+
 
 ## Final Project
 
