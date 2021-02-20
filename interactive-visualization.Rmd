@@ -42,7 +42,7 @@ server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
-2. Then, start by defining the user interface (ui) object by describing the components of fluidPage(). We want to use a slider, so the input expression is sliderInput(). We label the slider object "num" and the label that the user will see "Choose a number". Three other arguments are required sepcifically for sliders: 
+2. Then, start by defining the user interface (ui) object by describing the components of fluidPage(). We want to use a slider, so the input expression is sliderInput(). We label the slider object "num" and the label that the user will see "Choose a number". Three other arguments are required specifically for sliders: 
 
 value: the value the slider will start at when the app loads
 min: the minimum value the slider will have
@@ -77,7 +77,13 @@ server <- function(input, output) {
 
 5. The command for generating a random number drawn from a normal distribution is "rnorm()". Try rnorm in the command line using any number you like between the parentheses. It will draw numbers from a normal distribution with mean of zero and standard deviation of 1. Now, put the hist() command around your rnorm command: 
 
-hist(rnorm(10,209))
+```{r}
+
+hist(rnorm(10209))
+
+```
+
+
 
 Now you have generated a random histogram! We want our Shiny App to do this, but with a range of values that the user can choose from.
 
@@ -112,7 +118,7 @@ shinyApp(ui = ui, server = server)
 
 Go to the [Shiny Apps hosting service](http://www.shinyapps.io/) and set up an account. Transfer your visualization to the RStudio servers according to the instructions [here](http://docs.rstudio.com/shinyapps.io/).
 
-
+Gian: see test_app.R as a new GitHub repository for a successfully deployed app using ggplot2 for data visualization. The code for the ggplot app is below as well. 
 
 Now see if you can replace the standard histogram in the above Shiny App with a ggplot histogram hosted on shinyapps.io.
 
@@ -120,8 +126,9 @@ Now see if you can replace the standard histogram in the above Shiny App with a 
 
 ```{r}
 
+# deploy app to Shiny apps account 
 
-ui <- fluidPage(
+ui <- fluidPage( 
   sliderInput(inputId = "num", label = "Choose a number", 
     value = 1, min = 1, max = 100), plotOutput("hist"))
 
@@ -138,17 +145,17 @@ shinyApp(ui = ui, server = server)
 
 library(ggplot2)
 
-ui <- fluidPage(
+
+# come back to this step 
+ui <- fluidPage( 
   sliderInput(inputId = "num", label = "Choose a number", 
     value = 1, min = 1, max = 100), plotOutput("hist"))
-?fluidPage
+
 server <- function(input, output) {
-  output$hist <- renderPlot({
-    ggplot(data = rnorm(input$num), aes()) + geom_boxplot() 
-  })
-}
+  rnom(output$hist) <- renderPlot(ggplot(data = input$num, aes(x = input$num)) + geom_histogram()) } 
 
 shinyApp(ui = ui, server = server)
+
 
 
 
