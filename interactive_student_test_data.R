@@ -16,26 +16,41 @@ quiz_cat <- read_csv("quiz-categories.csv")
 
 
 
-
 # UI
 ui <- dashboardPage( 
-    dashboardHeader(), 
+    dashboardHeader(
+        title = "Visualizing Student Test Data"
+    ), 
     dashboardSidebar(), 
-    dashboardBody()
+    dashboardBody(
+        
+        box(
+            selectInput(inputId = "group", label = "Group By: ", 
+                        choices = c("googleable", "non.googleable"), 
+                        selected = "Googleable"), 
+            plotOutput("frequencyplot")
+        )
+    )
     
     )
 
 
-
-
-
 # Server 
-server <- function(input, output) {} 
-
-
+server <- function(input, output) {
+        
+        output$frequencyplot <- renderPlot({ 
+            
+            GROUP <- input$group 
+            fPlot <- plot(quiz_cat[ , GROUP], main = "Quiz Type") 
+            paste(fPlot) 
+            
+            })
+}
+        
 
 
 
 
 # Run the application 
 shinyApp(ui = ui, server = server)
+
