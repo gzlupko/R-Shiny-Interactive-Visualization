@@ -141,18 +141,38 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 
+# return to ggplot app 
+library(shiny) 
+library(ggplot2)
+
+ui <- fluidPage(
+  sliderInput(inputId = "num", label = "Choose a number", 
+              value = 1, min = 1, max = 100), plotOutput("hist")
+)
+
+server <- function(input, output) { 
+  
+  output$hist <- renderPlot({ 
+    
+    ggplot(data = input$num, aes(x = "num", y = rnorm("num")) + geom_histogram(stat = "identity"))
+    
+     })
+  
+}
+
+shinyApp(ui = ui, server = server) 
+
+
 
 
 library(ggplot2)
 
-
-# come back to this step 
 ui <- fluidPage( 
   sliderInput(inputId = "num", label = "Choose a number", 
     value = 1, min = 1, max = 100), plotOutput("hist"))
 
 server <- function(input, output) {
-  rnom(output$hist) <- renderPlot(ggplot(data = input$num, aes(x = input$num)) + geom_histogram()) } 
+  output$hist <- renderPlot(ggplot(data = as.data.frame(rnorm(input$num)), aes(x = input$num)) + geom_histogram()) } 
 
 shinyApp(ui = ui, server = server)
 
@@ -171,12 +191,12 @@ The categories represent the skills required to answer each question:
 
 wrangling - Question required data manipulations skills  
 coding - Question required coding skills  
-d.trees - Question invoilved decision trees  
+d.trees - Question involved decision trees  
 sna - Question involved social network analysis  
 nlp - Question involved natural language processing  
 viz - Question involved visualization of data  
 n.nets - Question involved neural nets  
 googleable - Question could be answered by searching the internet  
 non-googleable - Question could not be answered through simple searching of the internet  
-jitl - Question involved learning somethimg new (just in time learning)  
+jitl - Question involved learning something new (just in time learning)  
 substantive - Question involved wrestling with a complex idea that does not have a definitive answer
