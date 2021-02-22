@@ -17,6 +17,7 @@ quiz_cat <- read_csv("quiz-categories.csv")
 
 
 # UI
+
 ui <- dashboardPage( 
     dashboardHeader(
         title = "Visualizing Student Test Data"
@@ -28,7 +29,7 @@ ui <- dashboardPage(
             selectInput(inputId = "group", label = "Group By: ", 
                         choices = c("googleable", "non.googleable"), 
                         selected = "Googleable"), 
-            plotOutput("frequencyplot")
+            plotOutput('quiz_help')
         )
     )
     
@@ -36,19 +37,69 @@ ui <- dashboardPage(
 
 
 # Server 
+
 server <- function(input, output) {
+    
+    output$quiz_help <- renderPlot({ 
+        quiz_data <- quiz_cat %>%
+            group_by(googleable, non.googleable) 
         
-        output$frequencyplot <- renderPlot({ 
-            
-            GROUP <- input$group 
-            fPlot <- plot(quiz_cat[ , GROUP], main = "Quiz Type") 
-            paste(fPlot) 
-            
-            })
+        ggplot(data = quiz_data, aes(x = input$group)) + geom_bar(stat = "identity")
+        
+        })
+        
 }
+
         
 
+# Run the application 
+shinyApp(ui = ui, server = server)
 
+
+
+
+# second app 
+
+
+# UI
+
+ui <- dashboardPage( 
+    dashboardHeader(
+        title = "Visualizing Student Test Data"
+    ), 
+    dashboardSidebar(), 
+    dashboardBody(
+        
+        box(
+            selectInput(inputId = "Question", label = "Question Number: ", 
+                        choices = c("Q1", "Q2", "Q3", "Q4", "Q5", 
+                                    "Q6", "Q7"), 
+                        selected = "Choose a topic"), 
+            plotOutput('question_time')
+        )
+    )
+    
+)
+
+
+# Server 
+
+server <- function(input, output) {
+    
+    output$question_time <- renderPlot({ 
+        
+        students <- as.factor(midterm$id) 
+        question_number <- paste(input$Question, "_c", sep = "") 
+        question_duration <- paste(input$Question, "_time", sep = "")
+        
+        midterm %>%
+            group_by(question_number) %>%
+        ggplot(aes(x = students, y = question_duration)) + 
+            geom_bar(stat = "identity")
+        
+    })
+    
+}
 
 
 # Run the application 
