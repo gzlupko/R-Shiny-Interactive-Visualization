@@ -152,29 +152,18 @@ ui <- fluidPage(
 
 server <- function(input, output) { 
   
+  
   output$hist <- renderPlot({ 
     
-    ggplot(data = input$num, aes(x = "num", y = rnorm("num")) + geom_histogram(stat = "identity"))
+     distribution_data <- data.frame(x = rnorm(input$num)) 
     
+    ggplot(distribution_data, aes(x = x)) + geom_histogram() + xlab("Input Value") 
+  
      })
   
 }
 
 shinyApp(ui = ui, server = server) 
-
-
-
-
-library(ggplot2)
-
-ui <- fluidPage( 
-  sliderInput(inputId = "num", label = "Choose a number", 
-    value = 1, min = 1, max = 100), plotOutput("hist"))
-
-server <- function(input, output) {
-  output$hist <- renderPlot(ggplot(data = as.data.frame(rnorm(input$num)), aes(x = input$num)) + geom_histogram()) } 
-
-shinyApp(ui = ui, server = server)
 
 
 
