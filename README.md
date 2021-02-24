@@ -8,3 +8,7 @@ The goal for this project was to build and deploy and interactive R Shiny web ap
 
 
 * [Link to the application here.](https://gianzlupko.shinyapps.io/visualizing_midterm_results/?_ga=2.259140938.1985769423.1614121494-824644858.1613527376)
+
+
+
+<img src ="R-Shiny-Interactive-Visualization/R-shiny-image.png" width = 750 >
