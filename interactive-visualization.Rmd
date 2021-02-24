@@ -256,20 +256,28 @@ row.names(quiz) <- c("Wrangling", "Coding", "Decision Trees", "SNA",
                  "NLP", "Visualization", "Neural Networks", "Googleable", 
                  "Non-Googleable", "JITL", "Substantive")
 
+quiz$topics <-  c("Wrangling", "Coding", "Decision Trees", "SNA", 
+                 "NLP", "Visualization", "Neural Networks", "Googleable", 
+                 "Non-Googleable", "JITL", "Substantive")
 
 
+
+
+
+selections <- quiz_cat[ , -1] 
+selections <- colnames(selections) 
 
 ui <- dashboardPage( 
   dashboardHeader(
-    title = "Visualizing Student Test Data"
+    title = "Quiz Data Visualization"
   ), 
   dashboardSidebar(), 
   dashboardBody(
     
     box(
-      varSelectInput(inputId = "question", 
-                     label = "Question Duration: ", midterm1),  
-      plotOutput('question_time')
+      selectInput(inputId = "topic", 
+                     label = "Topic: ", selections),  
+      tableOutput('table')
     )
   )
   
@@ -280,17 +288,18 @@ ui <- dashboardPage(
 
 server <- function(input, output) { 
   
-  
-  
-  output$question_time <- renderPlot({
+  output$table<- renderTable(
     
-    ggplot(midterm1, aes(x = id, y = !!input$question)) + 
-      geom_bar(stat = "identity") + 
-      xlab("Students") + ylab("Question Duration (seconds)") + 
-      ggtitle("Midterm Question Duration by Student") 
-  })
+    quiz_filtered <- quiz_cat %>%
+      select(Question, input$topic) %>%
+      arrange(desc(input$topic)) 
   
+  )
+     
+  
+
 } 
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
