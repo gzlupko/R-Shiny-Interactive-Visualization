@@ -11,4 +11,4 @@ The goal for this project was to build and deploy and interactive R Shiny web ap
 
 
 
-<img src= "R-Shiny-Interactive-Visualization/shiny-images/R-shiny-image.png" width = 750 >
+<img src="R-Shiny-Interactive-Visualization/shiny-images/R-shiny-image.png" width = 750>
