@@ -174,7 +174,11 @@ jitl - Question involved learning something new (just in time learning)
 substantive - Question involved wrestling with a complex idea that does not have a definitive answer
 
 
-Midterm Results 
+Midterm Results
+
+applicatinon is deployed here: 
+https://gianzlupko.shinyapps.io/visualizing_midterm_results/
+
 ```{r}
 
 library(shiny) 
@@ -283,7 +287,6 @@ server <- function(input, output) {
   
 
 } 
-
 
 # Run the application 
 shinyApp(ui = ui, server = server)
