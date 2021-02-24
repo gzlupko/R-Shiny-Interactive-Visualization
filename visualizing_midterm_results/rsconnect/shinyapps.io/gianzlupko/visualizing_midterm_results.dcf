@@ -1,0 +1,12 @@
+name: visualizing_midterm_results
+title: visualizing_midterm_results
+username:
+account: gianzlupko
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3688642
+bundleId: 4264382
+url: https://gianzlupko.shinyapps.io/visualizing_midterm_results/
+when: 1614136018.61675
+asMultiple: FALSE
+asStatic: FALSE
