@@ -174,7 +174,7 @@ jitl - Question involved learning something new (just in time learning)
 substantive - Question involved wrestling with a complex idea that does not have a definitive answer
 
 
-
+Midterm Results 
 ```{r}
 
 library(shiny) 
@@ -184,7 +184,7 @@ library(readr)
 library(shinydashboard)
 
 midterm <- read_csv("midterm-results.csv")
-quiz_cat <- read_csv("quiz-categories.csv") 
+
 
 
 midterm1 <- midterm %>%
@@ -211,6 +211,70 @@ ui <- dashboardPage(
 )
 
 
+# Server 
+
+server <- function(input, output) { 
+  
+  
+  
+  output$question_time <- renderPlot({
+    
+    ggplot(midterm1, aes(x = id, y = !!input$question)) + 
+      geom_bar(stat = "identity") + 
+      xlab("Students") + ylab("Question Duration (seconds)") + 
+      ggtitle("Midterm Question Duration by Student") 
+  })
+  
+} 
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+
+```
+
+
+
+Quiz Categories 
+```{r}
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(shinydashboard)
+library(data.table)
+
+quiz_cat <- read_csv("quiz-categories.csv")
+
+
+quiz <- transpose(quiz_cat)
+column_names <- quiz[1, ]
+colnames(quiz) <- column_names
+quiz <- quiz[-1, ]
+row.names(quiz) <- c("Wrangling", "Coding", "Decision Trees", "SNA", 
+                 "NLP", "Visualization", "Neural Networks", "Googleable", 
+                 "Non-Googleable", "JITL", "Substantive")
+
+
+
+
+ui <- dashboardPage( 
+  dashboardHeader(
+    title = "Visualizing Student Test Data"
+  ), 
+  dashboardSidebar(), 
+  dashboardBody(
+    
+    box(
+      varSelectInput(inputId = "question", 
+                     label = "Question Duration: ", midterm1),  
+      plotOutput('question_time')
+    )
+  )
+  
+)
+
 
 # Server 
 
@@ -228,7 +292,6 @@ server <- function(input, output) {
   
 } 
 
-
 # Run the application 
 shinyApp(ui = ui, server = server)
 
@@ -236,9 +299,7 @@ shinyApp(ui = ui, server = server)
 
 
 
-
 ```
-
 
 
 
