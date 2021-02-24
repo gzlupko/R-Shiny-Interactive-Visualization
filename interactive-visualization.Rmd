@@ -248,22 +248,6 @@ library(data.table)
 quiz_cat <- read_csv("quiz-categories.csv")
 
 
-quiz <- transpose(quiz_cat)
-column_names <- quiz[1, ]
-colnames(quiz) <- column_names
-quiz <- quiz[-1, ]
-row.names(quiz) <- c("Wrangling", "Coding", "Decision Trees", "SNA", 
-                 "NLP", "Visualization", "Neural Networks", "Googleable", 
-                 "Non-Googleable", "JITL", "Substantive")
-
-quiz$topics <-  c("Wrangling", "Coding", "Decision Trees", "SNA", 
-                 "NLP", "Visualization", "Neural Networks", "Googleable", 
-                 "Non-Googleable", "JITL", "Substantive")
-
-
-
-
-
 selections <- quiz_cat[ , -1] 
 selections <- colnames(selections) 
 
@@ -303,9 +287,6 @@ server <- function(input, output) {
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
-
-
 
 
 ```
