@@ -126,23 +126,8 @@ Now see if you can replace the standard histogram in the above Shiny App with a 
 
 ```{r}
 
-# deploy app to Shiny apps account 
+# ggplot application 
 
-ui <- fluidPage( 
-  sliderInput(inputId = "num", label = "Choose a number", 
-    value = 1, min = 1, max = 100), plotOutput("hist"))
-
-server <- function(input, output) {
-  output$hist <- renderPlot({
-    hist(rnorm(input$num))
-  })
-}
-
-shinyApp(ui = ui, server = server)
-
-
-# return to ggplot app 
-library(shiny) 
 library(ggplot2)
 
 ui <- fluidPage(
@@ -166,8 +151,6 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server) 
 
 
-
-
 ```
 
 
@@ -189,3 +172,73 @@ googleable - Question could be answered by searching the internet
 non-googleable - Question could not be answered through simple searching of the internet  
 jitl - Question involved learning something new (just in time learning)  
 substantive - Question involved wrestling with a complex idea that does not have a definitive answer
+
+
+
+```{r}
+
+library(shiny) 
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(shinydashboard)
+
+midterm <- read_csv("midterm-results.csv")
+quiz_cat <- read_csv("quiz-categories.csv") 
+
+
+midterm1 <- midterm %>%
+  select(id, Q1_time, Q2_time, Q3_time, Q4_time, Q5_time, Q6_time, 
+         Q7_time) 
+
+midterm1$id <- 1:26
+
+
+ui <- dashboardPage( 
+  dashboardHeader(
+    title = "Visualizing Student Test Data"
+  ), 
+  dashboardSidebar(), 
+  dashboardBody(
+    
+    box(
+      varSelectInput(inputId = "question", 
+                     label = "Question Duration: ", midterm1),  
+      plotOutput('question_time')
+    )
+  )
+  
+)
+
+
+
+# Server 
+
+server <- function(input, output) { 
+  
+  
+  
+  output$question_time <- renderPlot({
+    
+    ggplot(midterm1, aes(x = id, y = !!input$question)) + 
+      geom_bar(stat = "identity") + 
+      xlab("Students") + ylab("Question Duration (seconds)") + 
+      ggtitle("Midterm Question Duration by Student") 
+  })
+  
+} 
+
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+
+
+
+
+
+```
+
+
+
+
